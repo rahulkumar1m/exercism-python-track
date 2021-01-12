@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"workbench.colorCustomizations": {
+			"activityBar.background": "#501B2A",
+			"titleBar.activeBackground": "#70263A",
+			"titleBar.activeForeground": "#FEFBFC"
+		},
+		"editor.fontFamily": "'Cascadia Code PL',  'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'"
+	}
+}
