@@ -1,3 +1,5 @@
+import re
+
 class SgfTree:
     def __init__(self, properties=None, children=None):
         self.properties = properties or {}
@@ -21,9 +23,28 @@ class SgfTree:
                 return False
         return True
 
-    def __ne__(self, other):
-        return not self == other
-
 
 def parse(input_string):
-    pass
+    if input_string == '(;)':
+        return SgfTree()
+    
+    value_reg = r'\[((?:[A-Za-z\s]|\\.)+)\]'
+    property_reg = r'([A-Z]+)((?:'+value_reg+')+)'
+
+    sgf_reg = r'\(;(?P<node>'+property_reg+')(?P<children>(\(?;'+property_reg+'\))*)\)?'
+
+    whole_match = re.match(sgf_reg, input_string)
+    if whole_match:
+        f = re.findall(property_reg, whole_match['children'])
+        children = []
+        if f:
+            for child in f:
+                children.append(SgfTree({child[0]:re.findall(value_reg, child[1])}))
+        nm = re.match(property_reg, whole_match['node'])
+        nmg = nm.groups()
+        vals = re.findall(value_reg, nmg[1])
+        vals = [v.replace('\\','').expandtabs(1) for v in vals]
+        prop = {nmg[0]:vals}
+        return SgfTree(prop.children)
+    else:
+        raise ValueError("Bad input {}".format(input_string))
