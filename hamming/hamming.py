@@ -4,11 +4,11 @@ def distance(strand_a : str, strand_b : str) -> int:
         raise ValueError("Length of DNA sequences DO NOT MATCH")
     
     # Initializing hammin_distance with 0
-    hamming_distance = 0
+    hamming_distance = sum([1 for i in range(len(strand_a)) if strand_a[i] != strand_b[i]])
     
     # Checking for differences between the two sequences
-    for i in range(len(strand_a)):
-        if strand_a[i] != strand_b[i]:
-            hamming_distance += 1
+    # for i in range(len(strand_a)):
+    #     if strand_a[i] != strand_b[i]:
+    #         hamming_distance += 1
     
     return hamming_distance
